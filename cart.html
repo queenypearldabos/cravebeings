@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CraveBeings - Your Cart</title>
+  <link rel="stylesheet" href="cart.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="CraveBeings Logo" />
+      <span>CraveBeings</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html" class="active">Cart</a>
+      <a href="reserve.html">Reserve</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <section class="cart-section">
+    <h1>Your Order</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+        <!-- Cart items will be dynamically inserted here -->
+      </tbody>
+    </table>
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="total-price">$0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  </section>
+
+  <script>
+    // Sample cart data - in real app, this would come from storage or backend
+    // const cart = [
+    //   { id: 1, name: "Spaghetti Bolognese", price: 12.99, quantity: 2 },
+    //   { id: 2, name: "Caesar Salad", price: 8.99, quantity: 1 },
+    // ];
+
+    function getCart() {
+      const cart = localStorage.getItem('cart');
+      return cart ? JSON.parse(cart) : [];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const cartItemsContainer = document.getElementById('cart-items');
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.name}</td>
+          <td><input type="number" min="1" value="${item.quantity}" onchange="updateQuantity('${item.name}', this.value)" /></td>
+          <td>$${item.price.toFixed(2)}</td>
+          <td>$${subtotal.toFixed(2)}</td>
+          <td><button onclick="removeItem('${item.name}')">X</button></td>
+        `;
+        cartItemsContainer.appendChild(row);
+      });
+      document.getElementById('total-price').textContent = '$' + total.toFixed(2);
+    }
+
+    function updateQuantity(name, quantity) {
+      const cart = getCart();
+      const item = cart.find(i => i.name === name);
+      if (item) {
+        item.quantity = parseInt(quantity) || 1;
+        saveCart(cart);
+        renderCart();
+      }
+    }
+
+    function removeItem(name) {
+      const cart = getCart();
+      const index = cart.findIndex(i => i.name === name);
+      if (index !== -1) {
+        cart.splice(index, 1);
+        saveCart(cart);
+        renderCart();
+      }
+    }
+
+    function checkout() {
+      alert('Checkout functionality is not implemented yet.');
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

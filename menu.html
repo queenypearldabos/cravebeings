@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu - CraveBeings</title>
+  <link rel="stylesheet" href="menu.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="CraveBeings Logo">
+      <span>CraveBeings</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="menu.html" class="active">Menu</a>
+      <a href="cart.html">Cart</a>
+      <a href="reserve.html">Reserve</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <section class="menu-section">
+    <div class="menu-container">
+      <div class="menu-item">
+        <img src="5516db54fd1de4e253134bba56e55a4b.jpg" alt="Chicken Adobo" />
+        <h3>Chicken Adobo</h3>
+        <p>Php50 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="f6066849b80a735f75f416cc6a11975d.jpg" alt="Fried Chicken" />
+        <h3>Four Season</h3>
+        <p>Php40 each</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="cf322a6005e6dbdc2cb9722b35b094f9.jpg" alt="Chicken Afritada" />
+        <h3>Chicken Afritada</h3>
+        <p>Php80 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="2c3af8c7e372a8618e7bdbf11512bfa9.jpg" alt="New Dish 1" />
+        <h3>Pinakbet</h3>
+        <p>Php60 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="2c10018029a57924031cf48e02103cdf.jpg" alt="New Dish 2" />
+        <h3>Spaghetti</h3>
+        <p>Php70 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="6a6e4485d6de9ba137aa396a9f82335a.jpg" alt="New Dish 3" />
+        <h3>Fried Chicken</h3>
+        <p>Php55 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="8fc63ecde415fc7e8119ee2b46c07be9.jpg" alt="New Dish 4" />
+        <h3>Macarroni Salad</h3>
+        <p>Php65 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="34f48f5c56c938642b80b0555e5adf82.jpg" alt="New Dish 5" />
+        <h3>Pizza</h3>
+        <p>Php75 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+      <div class="menu-item">
+        <img src="aaa74af3140d477c20a9f2a42e1910de.jpg" alt="New Dish 6" />
+        <h3>Japanese Macarroni</h3>
+        <p>Php85 per serve</p>
+        <button class="order-btn">Add to cart</button>
+      </div>
+    </div>
+    <div class="nav-arrows">
+      <button class="arrow left-arrow">&#8592;</button>
+      <button class="arrow right-arrow">&#8594;</button>
+    </div>
+  </section>
+  <script>
+    const menuContainer = document.querySelector('.menu-container');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const leftArrow = document.querySelector('.left-arrow');
+    const rightArrow = document.querySelector('.right-arrow');
+    const itemsToShow = 3;
+    let currentIndex = 0;
+
+    function updateMenuDisplay() {
+      menuItems.forEach((item, index) => {
+        if (index >= currentIndex && index < currentIndex + itemsToShow) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    leftArrow.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateMenuDisplay();
+      }
+    });
+
+    rightArrow.addEventListener('click', () => {
+      if (currentIndex < menuItems.length - itemsToShow) {
+        currentIndex++;
+        updateMenuDisplay();
+      }
+    });
+
+    // Initialize display
+    updateMenuDisplay();
+
+    // Add to cart functionality
+    const orderButtons = document.querySelectorAll('.order-btn');
+
+    function getCart() {
+      const cart = localStorage.getItem('cart');
+      return cart ? JSON.parse(cart) : [];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function addToCart(item) {
+      const cart = getCart();
+      const existingItem = cart.find(i => i.name === item.name);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push(item);
+      }
+      saveCart(cart);
+      alert(`${item.name} added to cart.`);
+    }
+
+    orderButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const menuItem = button.closest('.menu-item');
+        const name = menuItem.querySelector('h3').textContent;
+        const priceText = menuItem.querySelector('p').textContent;
+        // Extract price number from text like "Php50 per serve"
+        const priceMatch = priceText.match(/Php(\d+)/);
+        const price = priceMatch ? parseFloat(priceMatch[1]) : 0;
+        const item = { name, price, quantity: 1 };
+        addToCart(item);
+      });
+    });
+  </script>
+</body>
+</html>

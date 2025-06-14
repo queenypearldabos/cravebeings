@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background-color: #e4e4e4;
+}
+
+header {
+  background-color: #f7931e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo span {
+  font-weight: 800;
+  font-size: 22px;
+  color: #1a1a1a;
+}
+
+nav a {
+  margin-left: 30px;
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 16px;
+  position: relative;
+}
+
+nav a.active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: #000;
+  left: 0;
+  bottom: -5px;
+}
+
+.about-us {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px;
+}
+
+.text-content {
+  flex: 1;
+  max-width: 500px;
+}
+
+.text-content h2 {
+  font-size: 28px;
+  color: #2e2e2e;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.text-content p {
+  font-size: 16px;
+  color: #2e2e2e;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.text-content .highlight {
+  color: #f7931e;
+}
+
+.learn-more-btn {
+  background-color: #f7931e;
+  border: none;
+  padding: 12px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.learn-more-btn:hover {
+  background-color: #d97f1a;
+}
+
+.image-content {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-image img {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid #f7931e;
+}
+
+.sub-image {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+}
+
+.sub-image img {
+  width: 175px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid #e4e4e4;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  header {
+    padding: 15px 20px;
+  }
+  nav a {
+    margin-left: 15px;
+    font-size: 14px;
+  }
+  .about-us {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+  .text-content h2 {
+    font-size: 24px;
+  }
+  .text-content p {
+    font-size: 14px;
+  }
+  .learn-more-btn {
+    padding: 10px 16px;
+    width: 100%;
+  }
+  .image-content {
+    flex-direction: column;
+  }
+  .main-image img {
+    width: 240px;
+    height: 240px;
+  }
+  .sub-image {
+    position: static;
+    margin-top: 15px;
+  }
+  .sub-image img {
+    width: 135px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav {
+    margin-top: 10px;
+  }
+  nav a {
+    margin-left: 10px;
+    font-size: 12px;
+  }
+  .text-content h2 {
+    font-size: 20px;
+  }
+  .text-content p {
+    font-size: 12px;
+  }
+  .learn-more-btn {
+    padding: 8px 12px;
+  }
+  .main-image img {
+    width: 180px;
+    height: 180px;
+  }
+  .sub-image img {
+    width: 90px;
+    height: 90px;
+  }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reserve a Table - CraveBeings</title>
+  <link rel="stylesheet" href="reserve.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="CraveBeings Logo">
+      <span>CraveBeings</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart</a>
+      <a href="reserve.html" class="active">Reserve</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <section class="reserve-section">
+    <div class="image-container">
+      <img src="resto.jpg" alt="Buffet Serving" />
+    </div>
+    <div class="form-container">
+      <h2>Reserve a table for your <span class="highlight">Special Day!</span></h2>
+      <form id="reservation-form">
+        <div class="form-row">
+          <input type="text" id="name" placeholder="Name" required />
+          <input type="date" id="date" placeholder="Date" required />
+        </div>
+        <div class="form-row">
+          <input type="number" id="people" placeholder="People Count" min="1" required />
+          <input type="time" id="time" placeholder="Time" required />
+        </div>
+        <div class="form-row">
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="tel" id="mobile" placeholder="Mobile" required />
+        </div>
+        <button type="submit" class="reserve-btn">Reserve Now</button>
+      </form>
+      <script>
+        const form = document.getElementById('reservation-form');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const reservation = {
+            name: form.name.value,
+            date: form.date.value,
+            people: form.people.value,
+            time: form.time.value,
+            email: form.email.value,
+            mobile: form.mobile.value
+          };
+          let reservations = localStorage.getItem('reservations');
+          reservations = reservations ? JSON.parse(reservations) : [];
+          reservations.push(reservation);
+          localStorage.setItem('reservations', JSON.stringify(reservations));
+          alert('Reservation saved!');
+          form.reset();
+        });
+      </script>
+    </div>
+  </section>
+</body>
+</html>

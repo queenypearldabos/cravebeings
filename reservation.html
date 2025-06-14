@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Reservations - CraveBeings</title>
+  <link rel="stylesheet" href="reserve.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="CraveBeings Logo" />
+      <span>CraveBeings</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart</a>
+      <a href="reserve.html" class="active">Reserve</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <section class="reservation-section">
+    <h1>Your Reservations</h1>
+    <div id="reservation-list">
+      <!-- Reservations will be dynamically inserted here -->
+    </div>
+    <button onclick="clearReservations()">Clear All Reservations</button>
+  </section>
+
+  <script>
+    function getReservations() {
+      const reservations = localStorage.getItem('reservations');
+      return reservations ? JSON.parse(reservations) : [];
+    }
+
+    function saveReservations(reservations) {
+      localStorage.setItem('reservations', JSON.stringify(reservations));
+    }
+
+    function renderReservations() {
+      const reservations = getReservations();
+      const container = document.getElementById('reservation-list');
+      container.innerHTML = '';
+      if (reservations.length === 0) {
+        container.innerHTML = '<p>No reservations found.</p>';
+        return;
+      }
+      const table = document.createElement('table');
+      table.style.width = '100%';
+      table.style.borderCollapse = 'collapse';
+      const thead = document.createElement('thead');
+      thead.innerHTML = `
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px;">#</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Date</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Time</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">People</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Mobile</th>
+        </tr>
+      `;
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      reservations.forEach((res, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="border: 1px solid #ddd; padding: 8px;">${index + 1}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${res.name}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${res.date}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${res.time}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${res.people}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${res.email}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">${res.mobile}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+
+    function clearReservations() {
+      if (confirm('Are you sure you want to clear all reservations?')) {
+        localStorage.removeItem('reservations');
+        renderReservations();
+      }
+    }
+
+    renderReservations();
+  </script>
+</body>
+</html>
